@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body id="body">
+    <div id="all-container">
+        <div id="main-page">
+            <h1>SRBC Current Player Count</h1>
+            <div id="update-container">
+                <p id="number"></p>
+                <p id="summary"></p>
+            </div>
+            <p id="last-updated"></p>
+
+            <div id="admin-container">
+                <p id="admin">Admin Login: </p>
+                <input type="text" id="pass" placeholder="password"><br>
+                <button id="login-button">log in</button>
+            </div>
+        </div>
+    
+        <div id="admin-page" style="display: none">
+            <button id="back">← back to main page</button>
+            <p id="input-update">Update the current capacity: </p>
+            <input id="capacity" type="number" placeholder="# of players"><br>
+            <button id="update">update</button>
+            <p id="status"></p>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
