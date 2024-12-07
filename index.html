@@ -34,6 +34,100 @@
             <p id="status"></p>
         </div>
     </div>
-    <script src="scripts.js"></script>
+    <script>
+        document.getElementById("login-button").addEventListener('click', function() {
+            const pass = document.getElementById("pass").value
+            if (pass == "temp") {
+                document.getElementById("main-page").style.display = "none";
+                document.getElementById("pass").value = "";
+                document.getElementById("admin-page").style.display = "block";
+
+                document.getElementById("update").addEventListener('click', async function() {
+
+                    console.log("In update")
+                
+                    const capacity = document.getElementById("capacity").value;
+                    if (capacity != "") {
+                        console.log("In capacity not null")
+                        let now = new Date();
+                        console.log(`Last updated: ${now.toDateString()}, ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`)
+
+                        const response = await fetch('/status', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                capacity: capacity,
+                                day: now.toDateString(),
+                                hours: now.getHours(),
+                                minutes: now.getMinutes(),
+                                seconds: now.getSeconds(),
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok) {
+                            console.log("in response ok")
+                            document.getElementById("capacity").value = "";
+                            await updateStatus();
+                        }
+                    }
+                });
+            }    
+        });
+
+        document.getElementById("back").addEventListener('click', function() {
+            document.getElementById("status").textContent = " ";
+            document.getElementById("main-page").style.display = "block";
+            document.getElementById("admin-page").style.display = "none";  
+        });
+
+        async function updateStatus() {
+            console.log("In update status")
+
+            const response = await fetch('/status');
+            const data = await response.json();
+
+            if (response.ok) {
+                const lastKey = Object.keys(data).pop();
+                const lastValue = data[lastKey];
+
+                const updateContainer = document.getElementById("update-container");
+                updateContainer.style.border = "5px solid"
+                updateContainer.style.borderRadius = "5px"
+
+                const number = document.getElementById("number");
+                number.textContent = lastValue.capacity + " players";
+
+                const lastUpdated = document.getElementById("last-updated");
+                lastUpdated.textContent = `Last updated: ${lastValue.day}, ${lastValue.hours}:${lastValue.minutes}:${lastValue.seconds}`;
+
+                const lowOrHigh = document.getElementById("summary");
+                const backgroundColor = document.getElementById("update-container")
+
+                if (lastValue.capacity <= 16) {
+                    backgroundColor.style.backgroundColor = '#e7fcf6';
+                    updateContainer.style.borderColor = '#e7fcf6';
+                    lowOrHigh.textContent = "low";
+                } else if (lastValue.capacity <= 24) {
+                    backgroundColor.style.backgroundColor = '#fff9e7';
+                    updateContainer.style.borderColor = '#fff9e7';
+                    lowOrHigh.textContent = "medium";
+                } else {
+                    backgroundColor.style.backgroundColor = '#ffecee';
+                    updateContainer.style.borderColor = '#ffecee';
+                    lowOrHigh.textContent = "high";
+                }
+                document.getElementById("status").textContent = "success"
+            } else {
+                alert('Status could not be loaded! See console.')
+                console.log(response, data)
+            }
+        }
+
+        updateStatus()
+    </script>
 </body>
 </html>
