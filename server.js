@@ -29,8 +29,6 @@ app.get('/status', asyncHandler(async (req, res) => {
 }));
 
 app.post('/status', asyncHandler(async (req, res) => {
-    await db.collection('inventory').deleteMany({});
-
     const capacity = req.body.capacity;
     const day = req.body.day;
     const hours = req.body.hours;

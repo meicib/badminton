@@ -42,13 +42,9 @@
                 document.getElementById("pass").value = "";
                 document.getElementById("admin-page").style.display = "block";
 
-                document.getElementById("update").addEventListener('click', async function() {
-
-                    console.log("In update")
-                
+                document.getElementById("update").addEventListener('click', async function() {                
                     const capacity = document.getElementById("capacity").value;
                     if (capacity != "") {
-                        console.log("In capacity not null")
                         let now = new Date();
                         console.log(`Last updated: ${now.toDateString()}, ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`)
 
@@ -69,7 +65,6 @@
                         const data = await response.json();
 
                         if (response.ok) {
-                            console.log("in response ok")
                             document.getElementById("capacity").value = "";
                             await updateStatus();
                         }
@@ -85,7 +80,7 @@
         });
 
         async function updateStatus() {
-            console.log("In update status")
+            document.getElementById("status").textContent = " ";
 
             const response = await fetch('/status');
             const data = await response.json();
