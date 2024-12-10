@@ -53,4 +53,11 @@ button {
     padding: 2px 20px 4px 20px;
     border: 2px solid black;
     border-radius: 10px;
+    background-color:rgb(225, 225, 225);
+    transition: 400ms background-color ease;
+}
+
+button:hover {
+    background-color: rgb(95, 95, 95);
+    color: rgb(225, 225, 225);
 }
